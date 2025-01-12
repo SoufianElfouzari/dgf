@@ -1,3 +1,4 @@
+import 'package:baustellenapp/Constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -7,14 +8,14 @@ class Support extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE3E3E3),
+      backgroundColor: AppColors.backgroundColor, 
       appBar: AppBar(
-        backgroundColor: Color(0xFFE3E3E3),
+        backgroundColor: AppColors.mainColor,
         centerTitle: true,
         title: Text(
           "Support",
           style:
-              TextStyle(color: Color(0xFFCDB38B), fontWeight: FontWeight.bold),
+              TextStyle(color: AppColors.thirdColor, fontWeight: FontWeight.bold),
         ),
       ),
       body: Row(
@@ -30,7 +31,7 @@ class Support extends StatelessWidget {
                 Icon(
                   Icons.support_agent,
                   size: 160,
-                  color: Color(0xFF551A8B),
+                  color: AppColors.mainColor,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -38,7 +39,7 @@ class Support extends StatelessWidget {
                     "Brauchen Sie Hilfe?",
                     style: TextStyle(
                         fontSize: 24,
-                        color: Color(0xFFCDB38B),
+                        color: AppColors.inactiveIconColor,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -46,7 +47,7 @@ class Support extends StatelessWidget {
                   "Kontaktieren Sie uns!",
                   style: TextStyle(
                       fontSize: 24,
-                      color: Color(0xFFCDB38B),
+                      color: AppColors.mainColor,
                       fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
@@ -54,18 +55,18 @@ class Support extends StatelessWidget {
                   width: 400,
                   height: 494,
                   child: Card(
+                    color: AppColors.spezialColor,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28)),
                     child: Column(
                       children: [
                         _containerList(
-                            "Adresse", "Soufianstr. 187", Icons.location_on),
+                            "Adresse", "Niedervellmarer str. 8", Icons.location_on),
                         Padding(
                           padding: const EdgeInsets.all(7.5),
                           child: Container(
                             width: 337,
                             height: 1,
-                            color: Color.fromARGB(255, 203, 198, 209),
                           ),
                         ),
                         _containerList(
@@ -79,7 +80,7 @@ class Support extends StatelessWidget {
                           ),
                         ),
                         _containerList(
-                            "Email", "Soufian@omarnuh.seyfu", Icons.email),
+                            "Email", "info@innova-x.de", Icons.email),
                         Padding(
                           padding: const EdgeInsets.all(7.5),
                           child: Container(

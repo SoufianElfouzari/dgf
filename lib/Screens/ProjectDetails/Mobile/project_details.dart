@@ -216,13 +216,48 @@ class _ProjectDetailState extends State<ProjectDetail> {
     }
   }
 
+  Future<void> _deleteProjekt(String documentId) async {
+    try {
+      await databases.deleteDocument(
+        databaseId: AppwriteConstants.dbId,
+        collectionId: AppwriteConstants.baustellenoverviewCollectionId,
+        documentId: documentId,
+      );
+
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Projekt deleted')),
+      );
+      Navigator.pop(context);
+    } catch (e) {
+      print('Error deleting comment: $e');
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete comment: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
         title: Text(widget.projectName, style: const TextStyle(color: AppColors.thirdColor),),
+        actions: [
+          IconButton(
+            onPressed: () {
+              deleteProjekt(screenWidth);
+            }, 
+            icon: const Icon(Icons.delete)
+          ),
+          IconButton(
+            onPressed: () {}, 
+            icon: const Icon(Icons.document_scanner)
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -289,7 +324,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(
         'Zugewiesene Arbeiter: ${assignedWorkers.join(', ')}',
-        style: TextStyle(color: AppColors.mainColor), // Textfarbe für die Snackbar
+        style: const TextStyle(color: AppColors.mainColor), // Textfarbe für die Snackbar
       )),
     );
   },
@@ -315,7 +350,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: const Icon(Icons.person, color: AppColors.inactiveIconColor,),
-                    title: Text(assignedWorkers[index], style: TextStyle(color: AppColors.spezialColor)),
+                    title: Text(assignedWorkers[index], style: const TextStyle(color: AppColors.spezialColor)),
                   );
                 },
               ),
@@ -445,4 +480,84 @@ Future<void> _updateWorkerAssignment(String UserId) async {
       },
     );
   }
+
+  void deleteProjekt(double screenWidth) {
+  showDialog(
+    context: context,
+    barrierDismissible: true, // Allows closing the dialog by tapping outside
+    builder: (context) {
+      return Dialog(
+        backgroundColor: AppColors.spezialColor,
+        insetPadding: EdgeInsets.only(
+          left: screenWidth / 5,
+          right: screenWidth / 5,
+          top: screenWidth / 1.3,
+          bottom: screenWidth / 1.3,
+        ), // Adjust the padding for better appearance
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Bist du sicher, dass du Projekt ${widget.projectName} löschen willst?",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: screenWidth / 28.5),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _deleteProjekt(widget.currentBaustelleId); // Pass the project ID
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: Container(
+                      width: screenWidth / 6.5,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(screenWidth / 80),
+                        color: Colors.red.withOpacity(0.5),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Löschen",
+                          style: TextStyle(color: AppColors.secondColor),
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop(); // Close the dialog without doing anything
+                    },
+                    child: Container(
+                      width: screenWidth / 6.5,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(screenWidth / 80),
+                        color: AppColors.backgroundColor.withOpacity(0.5),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Abbrechen",
+                          style: TextStyle(color: AppColors.secondColor),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+
+
+
 }

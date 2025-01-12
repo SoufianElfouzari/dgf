@@ -64,6 +64,95 @@ class _UserCollectionScreenState extends State<UserCollectionScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
         toolbarHeight: 70,
+        actions: [
+  IconButton(
+    onPressed: () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // Controller für Eingabefelder
+          TextEditingController nameController = TextEditingController();
+          TextEditingController phoneController = TextEditingController();
+          TextEditingController locationController = TextEditingController();
+          TextEditingController emailController = TextEditingController();
+
+          return AlertDialog(
+            title: const Text(
+              'Mitarbeiter hinzufügen',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Name',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: phoneController,
+                    decoration: const InputDecoration(
+                      labelText: 'Telefon',
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: locationController,
+                    decoration: const InputDecoration(
+                      labelText: 'Ort',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'E-Mail',
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Dialog schließen
+                },
+                child: const Text('Abbrechen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Validierung oder Logging der Eingaben
+                  print('Name: ${nameController.text}');
+                  print('Telefon: ${phoneController.text}');
+                  print('Ort: ${locationController.text}');
+                  print('E-Mail: ${emailController.text}');
+
+                  // Noch keine Aktion: Dialog schließen
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Hinzufügen',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    },
+    icon: const Icon(Icons.add),
+  ),
+],
+
         title: const Text(
           'Mitarbeiter',
           style: TextStyle(color: AppColors.thirdColor, fontWeight: FontWeight.bold),

@@ -7,4 +7,5 @@ class AppColors {
   static const Color spezialColor = Color.fromARGB(255, 248, 229, 201);
   static const Color inactiveIconColor = Color(0xFFAFAFAF);
   static const Color backgroundColor = Color.fromARGB(255, 52, 52, 53);
+  //static const Color chatExtern = Color.fromARGB(255, 52, 52, 53);
 }

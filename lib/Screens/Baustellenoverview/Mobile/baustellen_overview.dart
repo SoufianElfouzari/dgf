@@ -188,7 +188,7 @@ class _OverviewState extends State<Overview> {
                                             ClipPath(
                                               clipper: TrapeziumClipper(),
                                               child: Container(
-                                                color: AppColors.secondColor,
+                                                color: AppColors.secondColor.withOpacity(0.85),
                                                 padding: const EdgeInsets.all(8.0),
                                                 width: double.infinity,
                                                 child: Column(
@@ -248,7 +248,7 @@ class _OverviewState extends State<Overview> {
                                             ClipPath(
                                               clipper: TrapeziumClipper2(),
                                               child: Container(
-                                                color: AppColors.secondColor,
+                                                color: AppColors.secondColor.withOpacity(0.85),
                                                 padding: const EdgeInsets.all(8.0),
                                                 width: double.infinity,
                                                 child: Column(
@@ -323,4 +323,6 @@ class _OverviewState extends State<Overview> {
       ),
     );
   }
+
+  
 }
